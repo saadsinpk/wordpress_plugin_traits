@@ -2,7 +2,7 @@
 Plugin Name: Conditions de sentiers - Magazine
 Plugin URI: http://sitechno.com
 description: Conditions de sentiers
-Version: 1.1
+Version: 1.5.0
 Author: Muhammad Saad
 Author URI: http://sidtechno.com
 */
@@ -46,7 +46,6 @@ function sid_techno_conditions_de_sentiers_two($attr) {
 		<th scope="col">Sentiers</th>
 		<th scope="col">État</th>
 		<th scope="col">Conditions</th>
-		<th scope="col">Dernier surfaçage</th>
 		<th scope="col">Mise à jour</th>
 		</tr></thead>';
 			if ($result->num_rows > 0) {
@@ -56,7 +55,6 @@ function sid_techno_conditions_de_sentiers_two($attr) {
 				<td>".$row['sentierNom']; if(empty($row['commentaires']) AND empty($row['comments'])) { } else { $html .= '<a href="#" class="datamodal" data-toggle="modal" data-target="#mainModal" data-title="'.$row['sentierNom'].'" data-body="'; if(!empty($row['commentaires'])) { $html .='<h2>Commentaires</h2><br>'.$row['commentaires']; } $html .= '<hr>'; if(!empty($row['comments'])) { $html .= '<br><h2>Comments</h2><br>'.$row['comments']; } $html .='"><img src="'.plugin_dir_url( __FILE__ ).'/images/note-.png"></a>'; } $html .= "</td>
 				<td style='text-align:center;'>"; if($row['etat'] == 0){ $html .= '<img src="'.plugin_dir_url( __FILE__ ).'/images/inconnu.png">'; } elseif($row['etat'] == 1){ $html .= '<img src="'.plugin_dir_url( __FILE__ ).'/images/ouvert.png">'; } elseif($row['etat'] == 2){ $html .= '<img src="'.plugin_dir_url( __FILE__ ).'/images/partiel.png">'; } elseif($row['etat'] == 3){ $html .= '<img src="'.plugin_dir_url( __FILE__ ).'/images/ferme.png">'; } $html .= "</td>
 				<td style='text-align:center;'>"; if($row['conditions'] == 0){ $html .= '<img src="'.plugin_dir_url( __FILE__ ).'/images/inconnu.png">'; } elseif($row['conditions'] == 1){ $html .= '<img src="'.plugin_dir_url( __FILE__ ).'/images/etoile1.png">'; } elseif($row['conditions'] == 2){ $html .= '<img src="'.plugin_dir_url( __FILE__ ).'/images/etoile2.png">'; } elseif($row['conditions'] == 3){ $html .= '<img src="'.plugin_dir_url( __FILE__ ).'/images/etoile3.png">'; } elseif($row['conditions'] == 4){ $html .= '<img src="'.plugin_dir_url( __FILE__ ).'/images/etoile4.png">'; } elseif($row['conditions'] == 5){ $html .= '<img src="'.plugin_dir_url( __FILE__ ).'/images/etoile5.png">'; } $html .= "</td>
-				<td>".$row['dernierSurfacage']."</td>
 				<td>".$row['maj']."</td></tr>";
 			  }
 			}

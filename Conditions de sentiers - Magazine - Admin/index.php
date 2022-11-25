@@ -2,7 +2,7 @@
 Plugin Name: Conditions de sentiers - Magazine - Admin
 Plugin URI: http://sitechno.com
 description: Club Site Admin
-Version: 1.2
+Version: 1.5
 Author: Muhammad Saad
 Author URI: http://sidtechno.com
 */
@@ -66,7 +66,7 @@ function return_conditions_de_sentiers() {
 	        	if($total_type_3 > 0) {
 							$error = 'Un sentier global existe déjà pour les rapports dans Motoneiges.ca';
 	        	} else {
-	        		$sql_update = "UPDATE Sentiers SET clubNo='".$_POST['clubNo']."',clubNom='".$_POST['clubNom']."',region='".$_POST['region']."',sentierNom='".$_POST['sentierNom']."',etat='".$_POST['etat']."',conditions='".$_POST['conditions']."',ordre='".$order."',commentaires='".$_POST['commentaires']."',comments='".$_POST['comments']."',distance='".$_POST['distance']."',maj='".$_POST['maj']."',dernierSurfacage='".$_POST['dernierSurfacage']."',actif='".$_POST['actif']."' WHERE id = '".$_GET['editid']."' ";
+	        		$sql_update = "UPDATE Sentiers SET auteur='MCA',clubNo='".$_POST['clubNo']."',clubNom='".$_POST['clubNom']."',region='".$_POST['region']."',sentierNom='".$_POST['sentierNom']."',etat='".$_POST['etat']."',conditions='".$_POST['conditions']."',ordre='".$order."',commentaires='".$_POST['commentaires']."',comments='".$_POST['comments']."',distance='".$_POST['distance']."',maj='".$_POST['maj']."',actif='".$_POST['actif']."' WHERE id = '".$_GET['editid']."' ";
 					$conn->query($sql_update);
 					echo '<meta http-equiv="refresh" content="0; URL='.get_site_url().'/wp-admin/admin.php?page=conditions_de_sentiers" />';
 					exit();
@@ -144,10 +144,6 @@ function return_conditions_de_sentiers() {
 			                            <input type="date" class="form-control form-control-sm" name="maj" id="maj" value="'.$row['maj'].'">
 			                        </div>
 			                        <div class="col">
-			                            <label for="dernierSurfacage" class="form-label">Dernier surfaçage</label>
-			                            <input type="date" class="form-control form-control-sm" name="dernierSurfacage" id="dernierSurfacage" value="'.$row['dernierSurfacage'].'">
-			                        </div>
-			                        <div class="col">
 			                            <label for="actif" class="form-label">Actif</label>
 			                            <select class="form-control form-control-sm" name="actif" id="actif">
 			                            	<option value="1" '; if($row['actif'] == 1) { echo 'selected'; } echo ' >Yes</option>
@@ -215,8 +211,8 @@ function return_conditions_de_sentiers() {
 	        	if($total_type_3 > 0) {
 							$error = 'Un sentier global existe déjà pour les rapports dans Motoneiges.ca';
 	        	} else {
-					$sql = "INSERT INTO Sentiers (clubNo, clubNom, region, sentierNom, etat, conditions, ordre, commentaires, comments, actif, distance, maj, dernierSurfacage, type)
-					VALUES ('".$_POST['clubNo']."', '".$_POST['clubNom']."', '".$_POST['region']."', '".$_POST['sentierNom']."', '".$_POST['etat']."', '".$_POST['conditions']."', '".$order."', '".$_POST['commentaires']."', '".$_POST['comments']."', '".$_POST['actif']."', '".$_POST['distance']."', '".$_POST['maj']."', '".$_POST['dernierSurfacage']."', '3')";
+					$sql = "INSERT INTO Sentiers (clubNo, clubNom, region, sentierNom, etat, conditions, ordre, commentaires, comments, actif, distance, maj, type)
+					VALUES ('".$_POST['clubNo']."', '".$_POST['clubNom']."', '".$_POST['region']."', '".$_POST['sentierNom']."', '".$_POST['etat']."', '".$_POST['conditions']."', '".$order."', '".$_POST['commentaires']."', '".$_POST['comments']."', '".$_POST['actif']."', '".$_POST['distance']."', '".$_POST['maj']."', '3')";
 					$conn->query($sql);
 					echo '<meta http-equiv="refresh" content="0; URL='.get_site_url().'/wp-admin/admin.php?page=conditions_de_sentiers" />';
 					exit();
@@ -288,10 +284,6 @@ function return_conditions_de_sentiers() {
 	                            <input type="date" class="form-control form-control-sm" name="maj" id="maj" value="'.date("Y-m-d").'">
 	                        </div>
 	                        <div class="col">
-	                            <label for="dernierSurfacage" class="form-label">Dernier surfaçage</label>
-	                            <input type="date" class="form-control form-control-sm" name="dernierSurfacage" id="dernierSurfacage" value="'.date("Y-m-d").'">
-	                        </div>
-	                        <div class="col">
 	                            <label for="actif" class="form-label">Actif</label>
 	                            <select class="form-control form-control-sm" name="actif" id="actif">
 	                            	<option value="1">Yes</option>
@@ -317,27 +309,23 @@ function return_conditions_de_sentiers() {
 			foreach ($list_of_trait as $key => $value) {
 				if(!empty($value)) {
 					if($_POST['etat'] != '--') {
-						$sql_update = "UPDATE Sentiers SET etat='".$_POST['etat']."' WHERE id = '".$value."' ";
+						$sql_update = "UPDATE Sentiers SET auteur='MCA', etat='".$_POST['etat']."' WHERE id = '".$value."' ";
 						$conn->query($sql_update);
 					}
 					if($_POST['conditions'] != '--') {
-						$sql_update = "UPDATE Sentiers SET conditions='".$_POST['conditions']."' WHERE id = '".$value."' ";
+						$sql_update = "UPDATE Sentiers SET auteur='MCA', conditions='".$_POST['conditions']."' WHERE id = '".$value."' ";
 						$conn->query($sql_update);
 					}
 					if($_POST['maj'] != '') {
-						$sql_update = "UPDATE Sentiers SET maj='".$_POST['maj']."' WHERE id = '".$value."' ";
-						$conn->query($sql_update);
-					}
-					if($_POST['dernierSurfacage'] != '') {
-						$sql_update = "UPDATE Sentiers SET dernierSurfacage='".$_POST['dernierSurfacage']."' WHERE id = '".$value."' ";
+						$sql_update = "UPDATE Sentiers SET auteur='MCA', maj='".$_POST['maj']."' WHERE id = '".$value."' ";
 						$conn->query($sql_update);
 					}
 					if($_POST['commentaires'] != '') {
-						$sql_update = "UPDATE Sentiers SET commentaires='".$_POST['commentaires']."' WHERE id = '".$value."' ";
+						$sql_update = "UPDATE Sentiers SET auteur='MCA', commentaires='".$_POST['commentaires']."' WHERE id = '".$value."' ";
 						$conn->query($sql_update);
 					}
 					if($_POST['comments'] != '') {
-						$sql_update = "UPDATE Sentiers SET comments='".$_POST['comments']."' WHERE id = '".$value."' ";
+						$sql_update = "UPDATE Sentiers SET auteur='MCA', comments='".$_POST['comments']."' WHERE id = '".$value."' ";
 						$conn->query($sql_update);
 					}
 				}
@@ -397,7 +385,7 @@ function return_conditions_de_sentiers() {
 		<th scope="col">État</th>
 		<th scope="col">Conditions</th>
 		<th scope="col">MAJ</th>
-		<th scope="col">Dernier surfaçage</th>
+		<th scope="col">Author</th>
 		<th scope="col">Action</th>
 		</tr></thead>';
 			if ($result->num_rows > 0) {
@@ -410,7 +398,7 @@ function return_conditions_de_sentiers() {
 				<td>"; if($row['etat'] == 0){ echo '<img src="'.plugin_dir_url( __FILE__ ).'/images/inconnu.png">'; } elseif($row['etat'] == 1){ echo '<img src="'.plugin_dir_url( __FILE__ ).'/images/ouvert.png">'; } elseif($row['etat'] == 2){ echo '<img src="'.plugin_dir_url( __FILE__ ).'/images/partiel.png">'; } elseif($row['etat'] == 3){ echo '<img src="'.plugin_dir_url( __FILE__ ).'/images/ferme.png">'; } echo "</td>
 				<td>"; if($row['conditions'] == 0){ echo '<img src="'.plugin_dir_url( __FILE__ ).'/images/inconnu.png">'; } elseif($row['conditions'] == 1){ echo '<img src="'.plugin_dir_url( __FILE__ ).'/images/etoile1.png">'; } elseif($row['conditions'] == 2){ echo '<img src="'.plugin_dir_url( __FILE__ ).'/images/etoile2.png">'; } elseif($row['conditions'] == 3){ echo '<img src="'.plugin_dir_url( __FILE__ ).'/images/etoile3.png">'; } elseif($row['conditions'] == 4){ echo '<img src="'.plugin_dir_url( __FILE__ ).'/images/etoile4.png">'; } elseif($row['conditions'] == 5){ echo '<img src="'.plugin_dir_url( __FILE__ ).'/images/etoile5.png">'; } echo "</td>
 				<td>".$row['maj']."</td>
-				<td>".$row['dernierSurfacage']."</td>
+				<td>".$row['auteur']."</td>				
 				<td><a href='".get_site_url()."/wp-admin/admin.php?page=conditions_de_sentiers&editid=".$row['id']."'>Édition</a> | <a href='#' data-href='".get_site_url()."/wp-admin/admin.php?page=conditions_de_sentiers&deleteid=".$row['id']."' class='delete'>Supprimer</a></td></tr>";
 			  }
 			}
